@@ -33,6 +33,10 @@
             </button>
         </div>
 
+        @if (error) {
+            <p class="text-red-500 text-sm text-center">{{ error }}</p>
+        }
+
         <button 
             (click)="signIn()"
             class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold cursor-pointer transition-colors">
@@ -40,8 +44,8 @@
         </button>
 
         <p class="text-center text-sm text-gray-500">
-    Don't have an account? 
-    <span (click)="openSignUp()" class="text-blue-600 cursor-pointer hover:underline font-medium">Sign Up</span>
-</p>
+            Don't have an account? 
+            <span (click)="openSignUp()" class="text-blue-600 cursor-pointer hover:underline font-medium">Sign Up</span>
+        </p>
     </div>
 </div>

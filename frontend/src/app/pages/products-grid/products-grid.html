@@ -18,18 +18,24 @@
             {{ category() | titlecase }}
         </h1>
 
-        <p class="text-gray-600 mb-6">
-            {{ store.filteredProducts().length }} products found
-        </p>
+        @if (loading()) {
+            <p class="text-gray-600 mb-6">Loading...</p>
+        } @else if (error()) {
+            <p class="text-red-500 mb-6">{{ error() }}</p>
+        } @else {
+            <p class="text-gray-600 mb-6">
+                {{ products().length }} products found
+            </p>
 
-        <div class="responsive-grid">
-            @for (product of store.filteredProducts(); track product.id) {
-                <div class="relative">
-                    <app-product-card [product]="product" (addToCartClicked)="addToCart($event)" />
-                    <app-toggle-wishlist-button [product]="product" class="absolute top-3 right-3 z-10" />
-                </div>
-            }
-        </div>
+            <div class="responsive-grid">
+                @for (product of products(); track product.id) {
+                    <div class="relative">
+                        <app-product-card [product]="product" (addToCartClicked)="addToCart($event)" />
+                        <app-toggle-wishlist-button [product]="product" class="absolute top-3 right-3 z-10" />
+                    </div>
+                }
+            </div>
+        }
     </mat-sidenav-content>
 
 </mat-sidenav-container>

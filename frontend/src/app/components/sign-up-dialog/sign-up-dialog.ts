@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { SignInDialog } from '../sign-in-dialog/sign-in-dialog';
+import { EcommerceStore } from '../../ecommerce-store';
+import { Api } from '../../services/api';
 
 @Component({
   selector: 'app-sign-up-dialog',
@@ -13,15 +15,31 @@ import { SignInDialog } from '../sign-in-dialog/sign-in-dialog';
 export class SignUpDialog {
   dialogRef = inject(MatDialogRef<SignUpDialog>);
   dialog = inject(MatDialog);
+  store = inject(EcommerceStore);
+  api = inject(Api);
 
   name = '';
   email = '';
   password = '';
   confirmPassword = '';
+  error = '';
 
   createAccount() {
-    console.log('Sign up:', this.name, this.email, this.password);
-    this.dialogRef.close();
+    if (this.password !== this.confirmPassword) {
+      this.error = 'Passwords do not match';
+      return;
+    }
+    this.api.register({ email: this.email, username: this.name, password: this.password }).subscribe({
+      next: (res) => {
+        localStorage.setItem('access_token', res.access);
+        localStorage.setItem('refresh_token', res.refresh);
+        this.store.setCurrentUser({ name: res.user.username, email: res.user.email });
+        this.dialogRef.close();
+      },
+      error: (err) => {
+        this.error = 'Registration failed. Try again.';
+      }
+    });
   }
 
   openSignIn() {

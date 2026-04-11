@@ -61,6 +61,11 @@
                         <span>${{ total.toFixed(2) }}</span>
                     </div>
                 </div>
+
+                @if (error) {
+                    <p class="text-red-500 text-sm text-center mt-2">{{ error }}</p>
+                }
+
                 <button
                     (click)="placeOrder()"
                     class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold cursor-pointer transition-colors">

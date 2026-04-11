@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { EcommerceStore } from '../../ecommerce-store';
 import BackButton from '../../components/back-button/back-button';
-import { RouterLink } from '@angular/router';
+import { Api } from '../../services/api';
 
 @Component({
   selector: 'app-checkout',
@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 export class Checkout {
   store = inject(EcommerceStore);
   router = inject(Router);
+  api = inject(Api);
 
   firstName = '';
   lastName = '';
@@ -22,6 +23,7 @@ export class Checkout {
   city = '';
   state = '';
   zip = '';
+  error = '';
 
   get subtotal() {
     return this.store.cartItems().reduce((acc, item) => acc + item.product.price * item.quantity, 0);
@@ -36,7 +38,28 @@ export class Checkout {
   }
 
   placeOrder() {
-    this.store.clearCart();
-    this.router.navigate(['/order-success']);
+    const orderData = {
+      first_name: this.firstName,
+      last_name: this.lastName,
+      address: this.address,
+      city: this.city,
+      state: this.state,
+      zip_code: this.zip,
+      total: this.total.toFixed(2),
+      items: this.store.cartItems().map(item => ({
+        product_id: item.product.id,
+        quantity: item.quantity,
+      }))
+    };
+
+    this.api.createOrder(orderData).subscribe({
+      next: () => {
+        this.store.clearCart();
+        this.router.navigate(['/order-success']);
+      },
+      error: () => {
+        this.error = 'Failed to place order. Please try again.';
+      }
+    });
   }
 }

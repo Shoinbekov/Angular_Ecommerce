@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EcommerceStore } from '../../ecommerce-store';
 import { SignInDialog } from '../../components/sign-in-dialog/sign-in-dialog';
 import { SignUpDialog } from '../../components/sign-up-dialog/sign-up-dialog';
+import { Api } from '../../services/api';
 
 @Component({
   selector: 'app-header-actions',
@@ -17,6 +18,7 @@ import { SignUpDialog } from '../../components/sign-up-dialog/sign-up-dialog';
 export class HeaderActions {
   store = inject(EcommerceStore);
   dialog = inject(MatDialog);
+  api = inject(Api);
   showDropdown = signal(false);
 
   openSignIn() {
@@ -32,6 +34,12 @@ export class HeaderActions {
   }
 
   signOut() {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (refreshToken) {
+      this.api.logout(refreshToken).subscribe();
+    }
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.store.setCurrentUser(null);
     this.showDropdown.set(false);
   }
