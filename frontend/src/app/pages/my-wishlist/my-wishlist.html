@@ -1,0 +1,42 @@
+<div class="mx-auto max-w-[1200px] py-6 px-4">
+    <app-back-button class="mb-6" navigateTo="/products/all">
+        Continue Shopping
+    </app-back-button>
+
+    @if (store.wishlistCount() > 0) {
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">My wishlist</h1>
+            <span class="text-gray-500 text-xl"> {{ store.wishlistCount() }} items </span>
+        </div>
+
+        <div class="responsive-grid">
+            @for (product of store.wishlistItems(); track product.id) {
+                <div class="relative">
+                    <app-product-card [product]="product" />
+                    <button
+                        class="absolute z-10 top-3 right-3 w-10 h-10 rounded-full !bg-white shadow-md flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110"
+                        (click)="store.removeFromWishlist(product); $event.stopPropagation()"
+                    >
+                        <mat-icon class="text-gray-600">delete</mat-icon>
+                    </button>
+                </div>
+            }
+        </div>
+
+        <div class="flex justify-center mt-8">
+            <button
+                class="border border-red-400 text-red-500 hover:bg-red-50 px-6 py-2 rounded-lg cursor-pointer transition-all"
+                (click)="store.clearWishlist()">
+                Clear Wishlist
+            </button>
+        </div>
+
+    } @else {
+        <div class="flex flex-col items-center justify-center py-20 text-gray-500">
+            <mat-icon class="text-6xl mb-4">favorite_border</mat-icon>
+            <h2 class="text-xl font-semibold mb-2">Your wishlist is empty</h2>
+            <p>Add products you love to your wishlist</p>
+        </div>
+    }
+
+</div>

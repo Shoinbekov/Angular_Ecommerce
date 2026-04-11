@@ -1,0 +1,36 @@
+<div class="mx-auto max-w-[1200px] py-6 px-4">
+    <app-back-button class="mb-6" navigateTo="/products/all">Continue Shopping</app-back-button>
+    <h1 class="text-3xl font-extrabold mb-6">Shopping Cart</h1>
+
+    <!-- Wishlist Section -->
+    <div class="border border-gray-200 rounded-xl p-5 bg-white mb-6 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+        <mat-icon class="text-gray-800">favorite</mat-icon>
+        <div>
+            <span class="font-bold text-lg">Wishlist ({{ store.wishlistCount() }})</span>
+            <p class="text-gray-500 text-sm">You have {{ store.wishlistCount() }} items saved for later</p>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+    <a routerLink="/wishlist" 
+       class="text-blue-600 font-medium px-3 py-2 rounded-lg hover:bg-blue-50 cursor-pointer transition-colors">
+        View All
+    </a>
+    <button 
+        class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-semibold cursor-pointer whitespace-nowrap transition-colors"
+        (click)="store.addAllWishlistToCart()">
+        <mat-icon class="text-sm">shopping_cart</mat-icon>
+        Add All to Cart
+    </button>
+</div>
+</div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+            <app-list-cart-items />
+        </div>
+        <div class="lg:col-span-1">
+            <app-order-summary />
+        </div>
+    </div>
+</div>

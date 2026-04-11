@@ -1,0 +1,73 @@
+<div class="mx-auto max-w-[1200px] py-6 px-4">
+    <app-back-button navigateTo="/cart">Back to Cart</app-back-button>
+    <h1 class="text-3xl font-bold mb-6">Checkout</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <div class="lg:col-span-2 flex flex-col gap-6">
+            <div class="border border-gray-200 rounded-xl p-6 bg-white">
+                <h2 class="text-xl font-bold mb-4">🚚 Shipping Information</h2>
+                <div class="flex flex-col gap-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input [(ngModel)]="firstName" placeholder="First Name"
+                            class="border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 text-sm"/>
+                        <input [(ngModel)]="lastName" placeholder="Last Name"
+                            class="border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 text-sm"/>
+                    </div>
+                    <textarea [(ngModel)]="address" placeholder="Address" rows="3"
+                        class="border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 text-sm resize-none"></textarea>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input [(ngModel)]="city" placeholder="City"
+                            class="border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 text-sm"/>
+                        <input [(ngModel)]="state" placeholder="State"
+                            class="border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 text-sm"/>
+                    </div>
+                    <input [(ngModel)]="zip" placeholder="Zip"
+                        class="border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-blue-500 text-sm"/>
+                </div>
+            </div>
+
+            <div class="border border-gray-200 rounded-xl p-6 bg-white">
+                <h2 class="text-xl font-bold mb-4">💳 Payment Options</h2>
+                <div class="flex items-center gap-3">
+                    <input type="radio" checked class="accent-blue-600"/>
+                    <span class="text-blue-600 font-bold text-xl">stripe</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-1">
+            <div class="border border-gray-200 rounded-xl p-6 bg-white">
+                <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+                <div class="flex flex-col gap-3 mb-4">
+                    @for (item of store.cartItems(); track item.product.id) {
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                            <span>${{ (item.product.price * item.quantity).toFixed(2) }}</span>
+                        </div>
+                    }
+                </div>
+                <div class="border-t border-gray-200 pt-4 flex flex-col gap-2">
+                    <div class="flex justify-between text-gray-600">
+                        <span>Subtotal</span>
+                        <span>${{ subtotal.toFixed(2) }}</span>
+                    </div>
+                    <div class="flex justify-between text-gray-600">
+                        <span>Tax (5%)</span>
+                        <span>${{ tax.toFixed(2) }}</span>
+                    </div>
+                    <div class="flex justify-between font-bold text-lg mt-2">
+                        <span>Total</span>
+                        <span>${{ total.toFixed(2) }}</span>
+                    </div>
+                </div>
+                <button
+                    (click)="placeOrder()"
+                    class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold cursor-pointer transition-colors">
+                    Place Order
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

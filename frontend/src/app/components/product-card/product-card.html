@@ -1,0 +1,31 @@
+<div [routerLink]="['/product', product().id]" class="bg-white cursor-pointer rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
+    <div class="relative">
+        <img [src]="product().imageUrl" class="w-full h-[220px] object-cover rounded-t-xl"/>
+        <ng-content />
+    </div>
+
+    <div class="p-5 flex flex-col flex-1">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2 leading-tight">
+            {{ product().name }}
+        </h3>
+        <p class="text-sm text-gray-600 mb-4 leading-relaxed flex-1">
+            {{ product().description }}
+        </p>
+
+        <div class="text-sm font-medium mb-4">
+            {{ product().inStock ? 'In Stock' : 'Out of Stock' }}
+        </div>
+
+        <div class="flex items-center justify-between mt-auto">
+            <span class="text-2xl font-bold text-gray-900">
+                ${{ product().price }}
+            </span>
+            <button 
+                class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap cursor-pointer" 
+                (click)="store.addToCart(product()); $event.stopPropagation()">
+                <mat-icon class="text-sm">shopping_cart</mat-icon>
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</div>
