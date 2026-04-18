@@ -22,18 +22,14 @@ export const routes: Routes = [
     {
         path: 'checkout',
         loadComponent: () => import('./pages/checkout/checkout').then(m => m.Checkout),
+        canActivate: [authGuard],
     },
     {
         path: 'order-success',
         loadComponent: () => import('./pages/order-success/order-success').then(m => m.OrderSuccess),
     },
     {
-    path: 'product/:id',
-    loadComponent: () => import('./pages/product-detail/product-detail').then(m => m.ProductDetail),
-    },
-    {
-    path: 'checkout',
-    loadComponent: () => import('./pages/checkout/checkout').then(m => m.Checkout),
-    canActivate: [authGuard],
+        path: 'product/:id',
+        loadComponent: () => import('./pages/product-detail/product-detail').then(m => m.ProductDetail),
     },
 ];

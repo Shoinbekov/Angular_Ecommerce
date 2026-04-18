@@ -59,4 +59,34 @@ export class Api {
   getOrders(): Observable<any> {
     return this.http.get(`${this.baseUrl}/orders/`, { headers: this.getHeaders() });
   }
+
+  // Wishlist
+  getWishlist(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/store/wishlist/`, { headers: this.getHeaders() });
+  }
+
+  addToWishlist(productId: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/store/wishlist/`, { product_id: productId }, { headers: this.getHeaders() });
+  }
+
+  removeFromWishlist(productId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/store/wishlist/${productId}/`, { headers: this.getHeaders() });
+  }
+
+  // Cart
+  getCart(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/store/cart/`, { headers: this.getHeaders() });
+  }
+
+  addToCart(productId: string, quantity: number = 1): Observable<any> {
+    return this.http.post(`${this.baseUrl}/store/cart/`, { product_id: productId, quantity }, { headers: this.getHeaders() });
+  }
+
+  removeFromCart(productId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/store/cart/${productId}/`, { headers: this.getHeaders() });
+  }
+
+  updateCartItem(productId: string, quantity: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/store/cart/${productId}/update/`, { quantity }, { headers: this.getHeaders() });
+  }
 }

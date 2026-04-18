@@ -21,11 +21,11 @@
                 ${{ product().price }}
             </span>
             <button 
-                class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap cursor-pointer" 
-                (click)="store.addToCart(product()); $event.stopPropagation()">
-                <mat-icon class="text-sm">shopping_cart</mat-icon>
-                Add to Cart
-            </button>
+    class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap cursor-pointer" 
+    (click)="addToCart(product()); $event.stopPropagation()">
+    <mat-icon class="text-sm">shopping_cart</mat-icon>
+    Add to Cart
+</button>
         </div>
     </div>
 </div>

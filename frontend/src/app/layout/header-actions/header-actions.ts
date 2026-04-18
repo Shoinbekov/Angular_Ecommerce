@@ -41,6 +41,8 @@ export class HeaderActions {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     this.store.setCurrentUser(null);
+    this.store.clearWishlist();
+    this.store.clearCart();
     this.showDropdown.set(false);
   }
 }

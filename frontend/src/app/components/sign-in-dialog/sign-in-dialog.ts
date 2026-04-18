@@ -29,10 +29,51 @@ export class SignInDialog {
         localStorage.setItem('access_token', res.access);
         localStorage.setItem('refresh_token', res.refresh);
         this.store.setCurrentUser({ name: res.user.username, email: res.user.email });
+        this.loadUserData();
         this.dialogRef.close();
       },
       error: () => {
         this.error = 'Invalid email or password';
+      }
+    });
+  }
+
+  loadUserData() {
+    this.api.getWishlist().subscribe({
+      next: (items) => {
+        items.forEach((item: any) => {
+          const product = {
+            id: String(item.product.id),
+            name: item.product.name,
+            description: item.product.description,
+            price: parseFloat(item.product.price),
+            imageUrl: item.product.image_url,
+            rating: item.product.rating,
+            reviewCount: item.product.review_count,
+            inStock: item.product.in_stock,
+            category: item.product.category_name,
+          };
+          this.store.addToWishlist(product);
+        });
+      }
+    });
+
+    this.api.getCart().subscribe({
+      next: (items) => {
+        items.forEach((item: any) => {
+          const product = {
+            id: String(item.product.id),
+            name: item.product.name,
+            description: item.product.description,
+            price: parseFloat(item.product.price),
+            imageUrl: item.product.image_url,
+            rating: item.product.rating,
+            reviewCount: item.product.review_count,
+            inStock: item.product.in_stock,
+            category: item.product.category_name,
+          };
+          this.store.addToCart(product, item.quantity);
+        });
       }
     });
   }
