@@ -81,6 +81,15 @@ cd backend
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+#for macOS(python3)
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+pip install -r requirments.txt
+python3 manage.py migrate
+python3 manage.py runserver
+```
 ```
 
 API runs at `http://localhost:8000`
